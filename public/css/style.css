@@ -1,0 +1,28 @@
+:root {
+    --x: 70px;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.active {
+    color: red;
+    font-style: italic;
+}
+
+#message {
+    text-align: center;
+}
+
+#board {
+    width: calc(3 * var(--x));
+    margin: auto;
+}
+
+#board button {
+    width: var(--x);
+    height: var(--x);
+    vertical-align: top;
+    font-size: 30px;
+}
