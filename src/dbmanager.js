@@ -21,6 +21,10 @@ function findRoom(roomID) {
     return collection.findOne({_id: parseInt(roomID)});
 }
 
+function findRoomByUserID(uID) {
+    return collection.findOne({uIDs: uID});
+}
+
 async function updateRoom(roomID, playerNumber, position) {
     let sign = playerNumber == 0 ? "×" : "⃝";    //first player (room creator) is always "×"
     let room = await findRoom(roomID);
@@ -60,6 +64,7 @@ function checkWinner(room) {
 module.exports = {
     createRoom,
     findRoom,
+    findRoomByUserID,
     updateRoom,
     joinRoom
 }
