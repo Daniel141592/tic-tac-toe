@@ -1,10 +1,8 @@
 "use strict";
 
-const express = require('express');
-const router = express.Router();
-const dbManager = require('./dbmanager.js');
+const dbManager = require('../dbmanager.js');
 
-router.get('/', async (req, res) => {
+async function get(req, res) {
     let userID = req.cookies.user;
     try {
         let response = await dbManager.findRoomByUserID(userID);
@@ -13,7 +11,9 @@ router.get('/', async (req, res) => {
         res.json(response);
     } catch (e) {
         res.status(404).send("Game not found");
-    }    
-});
+    }   
+}
 
-module.exports = router;
+module.exports = {
+    get
+}

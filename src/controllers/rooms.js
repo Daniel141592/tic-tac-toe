@@ -1,8 +1,8 @@
 "use strict";
 
 const path = require('path');
-const dbManager = require('./dbmanager.js');
-const User = require("./user.js");
+const dbManager = require('../dbmanager.js');
+const User = require("../user.js");
 
 async function check(req, res, next) {
     let room = await dbManager.findRoom(req.params.id);
@@ -27,7 +27,7 @@ async function check(req, res, next) {
 async function get(req, res) {
     //new player (link)
     if (res.locals.playerNumber == null) {
-        res.sendFile(path.join(__dirname, "../views/initform.html"));
+        res.sendFile(path.join(__dirname, "../../views/initform.html"));
         return;
     }
 

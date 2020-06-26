@@ -1,6 +1,6 @@
 "use strict";
 
-const rooms = require('./../src/rooms.js');
+const rooms = require('./../src/controllers/rooms.js');
 const User = require('./../src/user.js');
 const dbManager = require('./../src/dbmanager.js');
 

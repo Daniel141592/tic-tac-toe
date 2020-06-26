@@ -5,9 +5,9 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const mainpage = require('./src/mainpage.js');
-const rooms = require('./src/rooms.js');
-const api = require('./src/api.js');
+const mainpage = require('./src/controllers/mainpage.js');
+const rooms = require('./src/controllers/rooms.js');
+const api = require('./src/routes/api.js');
 
 const PORT = process.env.PORT || 3000;
 
@@ -20,11 +20,9 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(cookieParser());
 
-app.get("/", (req, res) => {
-	res.sendFile(path.join(__dirname, "views/initform.html"));
-});
+app.get("/", mainpage.get);
+app.post('/', mainpage.post);
 
-app.post('/', mainpage);
 app.use('/api', api);
 
 app.get('/:id', rooms.check, rooms.get);
