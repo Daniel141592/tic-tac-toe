@@ -1,38 +1,39 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="description" content="Gra w kółko i krzyżyk"/>
-        <meta name="keywords" content="gra, kółko, krzyżyk"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Kółko i krzyżyk</title>
-        <link rel="stylesheet" href="css/style.css"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="scripts/front.js"></script>
-    </head>
-    <body>
-        <div id="content">
-            <% 
-                let messages = ["Teraz krzyżyk", "Teraz kółko", "Oczekiwanie na gracza..."];
-            %>
-            <h2 id="message">
-                <% if (room.draw == true) { %>
-                    <span class="active"><%= "Remis!" %></span>    
-                <% } else if (room.winner != null) { %>
-                    <span <%= playerNumber == room.winner ? "class=active" : "" %>><%= "Wygrywa "+room.nicks[room.winner]; %></span>
-                <% } else { %>
-                    <%= messages[room.turn]; %> 
-                <% if (room.turn == 0 || room.turn == 1) { %>
-                    <span <%= playerNumber == room.turn ? "class=active" : "" %>><%= "("+room.nicks[room.turn]+")"; %></span> 
-                <% }} %>
-            </h2>
-            <form method="post">
-                <div id="board">
-                    <button name="b" value="0"><%= room.b[0]; %></button><button name="b" value="1"><%= room.b[1]; %></button><button name="b" value="2"><%= room.b[2]; %></button>
-                    <button name="b" value="3"><%= room.b[3]; %></button><button name="b" value="4"><%= room.b[4]; %></button><button name="b" value="5"><%= room.b[5]; %></button>
-                    <button name="b" value="6"><%= room.b[6]; %></button><button name="b" value="7"><%= room.b[7]; %></button><button name="b" value="8"><%= room.b[8]; %></button>
-                </div>
-            </form>
-        </div>
-    </body>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Gra w kółko i krzyżyk" />
+    <meta name="keywords" content="gra, kółko, krzyżyk" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kółko i krzyżyk</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="scripts/front.js"></script>
+</head>
+
+<body>
+    <% 
+        let messages = ["Teraz krzyżyk", "Teraz kółko", "Oczekiwanie na gracza..."];
+    %>
+    <h2 id="message">
+        <% if (room.draw == true) { %>
+        <span class="active"><%= "Remis!" %></span>
+        <% } else if (room.winner != null) { %>
+        <span <%= playerNumber == room.winner ? "class=active" : "" %>><%= "Wygrywa "+room.nicks[room.winner]; %></span>
+        <% } else { %>
+        <%= messages[room.turn]; %>
+        <% if (room.turn == 0 || room.turn == 1) { %>
+        <span <%= playerNumber == room.turn ? "class=active" : "" %>><%= "("+room.nicks[room.turn]+")"; %></span>
+        <% }} %>
+    </h2>
+    <form method="post">
+        <div id="board">
+            <button name="b" value="0"><%= room.b[0]; %></button><button name="b" value="1"><%= room.b[1]; %></button><button name="b" value="2"><%= room.b[2]; %></button>
+            <button name="b" value="3"><%= room.b[3]; %></button><button name="b" value="4"><%= room.b[4]; %></button><button name="b" value="5"><%= room.b[5]; %></button>
+            <button name="b" value="6"><%= room.b[6]; %></button><button name="b" value="7"><%= room.b[7]; %></button><button name="b" value="8"><%= room.b[8]; %></button>
+        </div>   
+    </form>
+</body>
+
 </html>

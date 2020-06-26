@@ -1,4 +1,2 @@
 node_modules
 .env
-mongo.bat
-mongo_stop.bat

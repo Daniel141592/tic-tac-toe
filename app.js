@@ -9,7 +9,7 @@ const mainpage = require('./src/mainpage.js');
 const rooms = require('./src/rooms.js');
 const api = require('./src/api.js');
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));

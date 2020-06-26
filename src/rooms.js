@@ -10,7 +10,7 @@ async function check(req, res, next) {
 
     //room is full or does not exists
     if (room == null || (room.connected > 1 && userID != room.uIDs[0] && userID != room.uIDs[1])) {
-        res.redirect("/");
+        res.redirect('/');
         return;
     }
 
@@ -38,7 +38,7 @@ async function post(req, res) {
     //new player sent his nick
     if (res.locals.playerNumber == null) {
         if (req.body == null || req.body.nick.trim() == "") {
-            res.send('brak nicku lub pusty');
+            res.status(400).send('brak nicku lub pusty');
             return;
         }
         res.locals.playerNumber = 1;
@@ -51,7 +51,7 @@ async function post(req, res) {
     }
 
     if (isNaN(req.body.b) || req.body.b < 0 || req.body.b > 8) {
-        res.status(500).send("Invalid value");
+        res.status(400).send("Invalid value");
         return;
     }
     let position = parseInt(req.body.b);

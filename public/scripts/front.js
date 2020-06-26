@@ -28,6 +28,7 @@ $(document).ready(() => {
             error: (xhr, status, err) => {
                 console.log(err);
                 clearInterval(interval);
+                window.location = window.location.href;
             }
         });
     }
