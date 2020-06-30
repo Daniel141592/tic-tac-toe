@@ -27,9 +27,8 @@ function findRoomByUserID(uID) {
 }
 
 async function updateRoom(roomID, playerNumber, position) {
-    let sign = playerNumber == 0 ? "×" : "⃝";    //first player (room creator) is always "×"
     let room = await collection.findOne({_id: parseInt(roomID)});
-    room.b[position] = sign;
+    room.b[position] = playerNumber;
     room.turn = playerNumber == 0 ? 1 : 0;
     if (checkWinner(room)) {
         room.winner = playerNumber;

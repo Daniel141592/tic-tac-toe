@@ -37,8 +37,8 @@ async function get(req, res) {
 async function post(req, res) {
     //new player sent his nick
     if (res.locals.playerNumber == null) {
-        if (req.body == null || req.body.nick.trim() == "") {
-            res.status(400).send('brak nicku lub pusty');
+        if (req.body == null || req.body.nick == null || req.body.nick.trim() == "") {
+            res.status(400).send('Nie wpisano nicku');
             return;
         }
         res.locals.playerNumber = 1;
@@ -50,7 +50,7 @@ async function post(req, res) {
         return;
     }
 
-    if (isNaN(req.body.b) || req.body.b < 0 || req.body.b > 8) {
+    if (req.body.b == null || isNaN(req.body.b) || req.body.b < 0 || req.body.b > 8) {
         res.status(400).send("Invalid value");
         return;
     }

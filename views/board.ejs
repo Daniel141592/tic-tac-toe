@@ -15,6 +15,7 @@
 <body>
     <% 
         let messages = ["Teraz krzyżyk", "Teraz kółko", "Oczekiwanie na gracza..."];
+        let s = ["×", "⃝"];  //first player (room creator) is always "×"
     %>
     <h2 id="message">
         <% if (room.draw == true) { %>
@@ -29,9 +30,9 @@
     </h2>
     <form method="post">
         <div id="board">
-            <button name="b" value="0"><%= room.b[0]; %></button><button name="b" value="1"><%= room.b[1]; %></button><button name="b" value="2"><%= room.b[2]; %></button>
-            <button name="b" value="3"><%= room.b[3]; %></button><button name="b" value="4"><%= room.b[4]; %></button><button name="b" value="5"><%= room.b[5]; %></button>
-            <button name="b" value="6"><%= room.b[6]; %></button><button name="b" value="7"><%= room.b[7]; %></button><button name="b" value="8"><%= room.b[8]; %></button>
+            <button name="b" value="0"><%= s[room.b[0]] %></button><button name="b" value="1"><%= s[room.b[1]] %></button><button name="b" value="2"><%= s[room.b[2]] %></button>
+            <button name="b" value="3"><%= s[room.b[3]] %></button><button name="b" value="4"><%= s[room.b[4]] %></button><button name="b" value="5"><%= s[room.b[5]] %></button>
+            <button name="b" value="6"><%= s[room.b[6]] %></button><button name="b" value="7"><%= s[room.b[7]] %></button><button name="b" value="8"><%= s[room.b[8]] %></button>
         </div>   
     </form>
 </body>

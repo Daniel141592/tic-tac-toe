@@ -4,8 +4,15 @@ const rooms = require('./../src/controllers/rooms.js');
 const User = require('./../src/user.js');
 const dbManager = require('./../src/dbmanager.js');
 
-jest.mock('./../src/user.js');
 jest.mock('./../src/dbmanager.js');
+const mockUserJoin = jest.fn();
+jest.mock('./../src/user.js', () => {
+    return jest.fn(() => {
+        return {
+            join: mockUserJoin
+        };
+    });
+});
 
 describe("rooms", () => {
     let req;
@@ -82,10 +89,10 @@ describe("rooms", () => {
         expect(res.status).toHaveBeenLastCalledWith(400);
     });
 
-    test('new player POST should create new User instance', async () => {
+    test('new player POST should call User.join()', async () => {
         res.locals.playerNumber = null;
         await rooms.post(req, res);
-        expect(User).toHaveBeenCalled();
+        expect(mockUserJoin).toHaveBeenCalled();
     });
 
     test('new player POST should call res.render("board")', async () => {

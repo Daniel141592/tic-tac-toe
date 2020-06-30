@@ -8,7 +8,7 @@ function get(req, res) {
 }
 
 async function post(req, res) {
-    if (req.body == null || req.body.nick.trim() == "") {
+    if (req.body == null || req.body.nick == null || req.body.nick.trim() == "") {
         res.status(400).send('brak nicku lub pusty');
         return;
     }

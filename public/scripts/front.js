@@ -7,9 +7,10 @@ $(document).ready(() => {
             dataType: "json",
             success: result => {
                 let messages = ["Teraz krzyżyk", "Teraz kółko", "Oczekiwanie na gracza..."];
+                let s = ["×", "⃝"];
                 let message = "";
                 if (result.draw == true) {
-                    message += "<span class=\"active\">\"Remis!\"</span>"
+                    message += "<span class=\"active\">Remis!</span>"
                 } else if (result.winner != null) {
                     message += "<span " + (result.playerNumber == result.winner ? "class=active>" : ">") + " Wygrywa " + result.nicks[result.winner] + "</span>";
                 } else {
@@ -22,7 +23,7 @@ $(document).ready(() => {
                 let buttons = $("[name='b']");
 
                 for (let i = 0; i < 9; i++) {
-                    buttons.eq(i).html(result.b[i]);
+                    buttons.eq(i).html(s[result.b[i]]);
                 }
             },
             error: (xhr, status, err) => {

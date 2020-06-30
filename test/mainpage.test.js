@@ -3,7 +3,14 @@
 const mainpage = require('./../src/controllers/mainpage.js');
 const User = require('./../src/user.js');
 
-jest.mock('./../src/user.js');
+const mockUserAssign = jest.fn();
+jest.mock('./../src/user.js', () => {
+    return jest.fn(() => {
+        return {
+            assign: mockUserAssign
+        };
+    });
+});
 
 describe('mainpage', () => {
     let req;
@@ -28,9 +35,9 @@ describe('mainpage', () => {
         expect(res.sendFile).toHaveBeenCalled();
     });
 
-    test('correct request on main page should create new User instance', async () => {
+    test('correct request on main page should call User.assign()', async () => {
         await mainpage.post(req, res);
-        expect(User).toHaveBeenCalled();
+        expect(mockUserAssign).toHaveBeenCalled();
     });
 
     test('request without "nick" should call res.status(400)', async () => {
