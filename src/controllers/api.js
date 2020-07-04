@@ -81,11 +81,12 @@ async function updateRoom(req, res) {
 
     try {
         let room = await dbManager.findRoomByUserID(userID);
-        room.playerNumber = userID == room.uIDs[0] ? 0 : 1; 
-    
-        if (room.playerNumber == room.turn && room.board[position] == null && room.winner == null) {
-            room = await dbManager.updateRoom(room._id, room.playerNumber, position);
+        let playerNumber = userID == room.uIDs[0] ? 0 : 1;    
+        
+        if (playerNumber == room.turn && room.board[position] == null && room.winner == null) {
+            room = await dbManager.updateRoom(room._id, playerNumber, position);
         }
+        room.playerNumber = playerNumber;
         delete room.uIDs;
         res.json(room);
     } catch (e) {
