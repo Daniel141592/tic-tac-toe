@@ -41,7 +41,7 @@ describe('dbmanager', () => {
     test('createRoom() should call collection.insertOne()', async () => {
         mockCollection.find.mockImplementationOnce(() => mockCollection);
         await dbManager.createRoom(userNick, userID);
-        let obj = { _id: COUNT+1, connected: 1, turn: 2, nicks: [userNick], uIDs: [userID], b: [] };
+        let obj = { _id: COUNT+1, connected: 1, turn: 2, nicks: [userNick], uIDs: [userID], board: [] };
         expect(mockCollection.insertOne).toHaveBeenLastCalledWith(obj);
     });
 
@@ -62,8 +62,8 @@ describe('dbmanager', () => {
 
     test('updateRoom() should update room.b[position]', async () => {
         let playerNumber = 0;
-        let room = { b: ["o", null] };
-        let expected = {b: ["o", "×"], turn: 1};
+        let room = { board: [1, null] };
+        let expected = { board: [1, 0], turn: 1 };
         let position = 1;
         mockCollection.findOne.mockImplementationOnce(() => room);
         checkWinner.mockImplementationOnce(() => false);
@@ -73,8 +73,8 @@ describe('dbmanager', () => {
 
     test('when checkWinner() returns true updateRoom() should set room.winner', async () => {
         let playerNumber = 0;
-        let room = { b: ["o", null] };
-        let expected = {b: ["o", "×"], turn: 1, winner: 0};
+        let room = { board: [1, null] };
+        let expected = { board: [1, 0], turn: 1, winner: 0 };
         let position = 1;
         mockCollection.findOne.mockImplementationOnce(() => room);
         checkWinner.mockImplementationOnce(() => true);

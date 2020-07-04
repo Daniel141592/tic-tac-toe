@@ -72,18 +72,18 @@ async function joinRoom(req, res) {
 }
 
 async function updateRoom(req, res) {
-    if (req.body.b == null || isNaN(req.body.b) || req.body.b < 0 || req.body.b > 8) {
+    if (req.body.position == null || isNaN(req.body.position) || req.body.position < 0 || req.body.position > 8) {
         res.status(400).send("Invalid value");
         return;
     }
-    let position = parseInt(req.body.b);
+    let position = parseInt(req.body.position);
     let userID = req.cookies.user;
 
     try {
         let room = await dbManager.findRoomByUserID(userID);
         room.playerNumber = userID == room.uIDs[0] ? 0 : 1; 
     
-        if (room.playerNumber == room.turn && room.b[position] == null && room.winner == null) {
+        if (room.playerNumber == room.turn && room.board[position] == null && room.winner == null) {
             room = await dbManager.updateRoom(room._id, room.playerNumber, position);
         }
         delete room.uIDs;

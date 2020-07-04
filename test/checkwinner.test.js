@@ -6,99 +6,99 @@ describe('checkwinner', () => {
     let room = {};
 
     test('checkWinner() should return true', () => {
-        room.b = [
-            "x", "x", "x"
+        room.board = [
+            0, 0, 0
         ];
         expect(checkWinner(room)).toBe(true);
     });
 
     test('checkWinner() should return true', () => {
-        room.b = [
-            "x", "o", "x",
-            "o", "o", "o",
-            "x", "x", "o"
+        room.board = [
+            0, 1, 0,
+            1, 1, 1,
+            0, 0, 1
         ];
         expect(checkWinner(room)).toBe(true);
     });
 
     test('checkWinner() should return true', () => {
-        room.b = [
-            "x", "o", "x",
-            null, "x", "o",
-            "o", "o", "o"
+        room.board = [
+            0, 1, 0,
+            null, 0, 1,
+            1, 1, 1
         ];
         expect(checkWinner(room)).toBe(true);
     });
 
     test('checkWinner() should return false', () => {
-        room.b = [
-            "o", "x", "x",
-            "x", "x", "o",
-            "o", "o", "x"
+        room.board = [
+            1, 0, 0,
+            0, 0, 1,
+            1, 1, 0
         ];
         expect(checkWinner(room)).toBe(false);
     });
 
     test('checkWinner() should return false', () => {
-        room.b = [ "o" ];
+        room.board = [ 1 ];
         expect(checkWinner(room)).toBe(false);
     });
 
     test('checkWinner() should return false', () => {
-        room.b = [];
+        room.board = [];
         expect(checkWinner(room)).toBe(false);
     });
 
     test('checkWinner() should return true', () => {
-        room.b = [
-            "o", "x", "x",
-            "o", "x", "o",
-            "o", "o", "x"
+        room.board = [
+            1, 0, 0,
+            1, 0, 1,
+            1, 1, 0
         ];
         expect(checkWinner(room)).toBe(true);
     });
 
     test('checkWinner() should return true', () => {
-        room.b = [
-            "o", "x", "o",
-            "x", "x", "o",
-            "o", "x"
+        room.board = [
+            1, 0, 1,
+            0, 0, 1,
+            1, 0
         ];
         expect(checkWinner(room)).toBe(true);
     });
 
     test('checkWinner() should return true', () => {
-        room.b = [
-            "o", null, "x",
-            "x", null, "x",
-            "o", "o", "x"
+        room.board = [
+            1, null, 0,
+            0, null, 0,
+            1, 1, 0
         ];
         expect(checkWinner(room)).toBe(true);
     });
 
     test('checkWinner() should return true', () => {
-        room.b = [
-            "x", "o", "x",
-            "o", "x", "o",
-            "o", "x", "x"
+        room.board = [
+            0, 1, 0,
+            1, 0, 1,
+            1, 0, 0
         ];
         expect(checkWinner(room)).toBe(true);
     });
 
     test('checkWinner() should return true', () => {
-        room.b = [
-            "x", "o", "o",
-            "x", "o", "x",
-            "o", "x", null
+        room.board = [
+            0, 1, 1,
+            0, 1, 0,
+            1, 0, null
         ];
         expect(checkWinner(room)).toBe(true);
     });
 
     test('checkWinner() should return false', () => {
-        room.b = [ 
-            "o", "x", "o",
-            "x", "x", "o",
-            "x", "o", "x"
+        room.board = [ 
+            1, 0, 1,
+            0, 0, 1,
+            0, 1, 0
         ];
         expect(checkWinner(room)).toBe(false);
     });

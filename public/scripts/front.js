@@ -20,10 +20,10 @@ $(document).ready(() => {
                     }
                 }
                 $("#message").html(message);
-                let buttons = $("[name='b']");
+                let buttons = $("[name='position']");
 
                 for (let i = 0; i < 9; i++) {
-                    buttons.eq(i).html(s[result.b[i]]);
+                    buttons.eq(i).html(s[result.board[i]]);
                 }
             },
             error: (xhr, status, err) => {

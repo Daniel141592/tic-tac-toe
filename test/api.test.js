@@ -27,7 +27,7 @@ describe("api", () => {
         mockUserJoin.mockClear();
         
         req = {
-            body: { nick: "test123", b: null},
+            body: { nick: "test123", position: null},
             cookies: { user: "_abcdefghi" },
             params: { id: ID }
         };
@@ -43,7 +43,7 @@ describe("api", () => {
                     _id: ID,
                     connected: 2,
                     uIDs: [req.cookies.user, "_987654321"],
-                    b: [],
+                    board: [],
                     turn: 0,
                     winner: null
                 },
@@ -60,7 +60,7 @@ describe("api", () => {
         let response = {
             _id: ID,
             connected: 2,
-            b: [],
+            board: [],
             turn: 0,
             winner: null,
             playerNumber: 0
@@ -109,14 +109,14 @@ describe("api", () => {
     });
 
     test('POST request on /api/rooms/update with incorrect param should call res.status(400)', async () => {
-        req.body.b = "12";
+        req.body.position = "12";
         await api.updateRoom(req, res);
         expect(res.status).toHaveBeenLastCalledWith(400);
     });
 
     test('correct POST request on /api/rooms/update should call dbManager.updateRoom()', async () => {
-        req.body.b = 3;
+        req.body.position = 3;
         await api.updateRoom(req, res);
-        expect(dbManager.updateRoom).toHaveBeenLastCalledWith(res.locals.room._id, res.locals.room.playerNumber, req.body.b);
+        expect(dbManager.updateRoom).toHaveBeenLastCalledWith(res.locals.room._id, res.locals.room.playerNumber, req.body.position);
     });
 });

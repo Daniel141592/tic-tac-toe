@@ -50,13 +50,13 @@ async function post(req, res) {
         return;
     }
 
-    if (req.body.b == null || isNaN(req.body.b) || req.body.b < 0 || req.body.b > 8) {
+    if (req.body.position == null || isNaN(req.body.position) || req.body.position < 0 || req.body.position > 8) {
         res.status(400).send("Invalid value");
         return;
     }
-    let position = parseInt(req.body.b);
+    let position = parseInt(req.body.position);
 
-    if (res.locals.playerNumber == res.locals.room.turn && res.locals.room.b[position] == null && res.locals.room.winner == null) {
+    if (res.locals.playerNumber == res.locals.room.turn && res.locals.room.board[position] == null && res.locals.room.winner == null) {
         res.locals.room = await dbManager.updateRoom(req.params.id, res.locals.playerNumber, position);
     }
     res.render("board");

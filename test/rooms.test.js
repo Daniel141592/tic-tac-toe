@@ -22,7 +22,7 @@ describe("rooms", () => {
 
     beforeEach(() => {
         req = {
-            body: { nick: "test123", b: null},
+            body: { nick: "test123", position: null},
             cookies: { user: "_abcdefghi" },
             params: { id: ID }
         };
@@ -39,7 +39,7 @@ describe("rooms", () => {
                 room: {
                     connected: 2,
                     uIDs: [req.cookies.user, "_987654321"],
-                    b: [],
+                    board: [],
                     turn: 0,
                     winner: null
                 }
@@ -102,42 +102,42 @@ describe("rooms", () => {
     });
 
     test ('POST request with incorrect board index should call res.status(400)', async () => {
-        req.body.b = '10';
+        req.body.position = '10';
         await rooms.post(req, res);
         expect(res.status).toHaveBeenLastCalledWith(400);
     });
 
     test('correct POST request with new data should call dbManager.updateRoom(ID, playerNumber, b)', async () => {
-        req.body.b = 1;
+        req.body.position = 1;
         await rooms.post(req, res);
-        expect(dbManager.updateRoom).toHaveBeenLastCalledWith(ID, res.locals.playerNumber, req.body.b);
+        expect(dbManager.updateRoom).toHaveBeenLastCalledWith(ID, res.locals.playerNumber, req.body.position);
     });
 
     test('correct POST request without new data should not call dbManager.updateRoom()', async () => {
-        req.body.b = 1;
-        res.locals.room.b = ["x", "o"];
+        req.body.position = 1;
+        res.locals.room.board = [0, 1];
         await rooms.post(req, res);
         expect(dbManager.updateRoom).not.toHaveBeenCalled();
     });
 
     test('correct POST request when playerNumber != turn should not call dbManager.updateRoom()', async () => {
-        req.body.b = 1;
-        res.locals.room.b = ["x"];
+        req.body.position = 1;
+        res.locals.room.board = [0];
         res.locals.room.turn = 1;
         await rooms.post(req, res);
         expect(dbManager.updateRoom).not.toHaveBeenCalled();
     });
 
     test('correct POST request when winner != null should not call dbManager.updateRoom()', async () => {
-        req.body.b = 1;
-        res.locals.room.b = ["x"];
+        req.body.position = 1;
+        res.locals.room.board = [0];
         res.locals.room.winner = 1;
         await rooms.post(req, res);
         expect(dbManager.updateRoom).not.toHaveBeenCalled();
     });
 
     test('correct POST request should call res.render("board")', async () => {
-        req.body.b = 1;
+        req.body.position = 1;
         await rooms.post(req, res);
         expect(res.render).toHaveBeenLastCalledWith('board');
     });

@@ -9,7 +9,7 @@ MongoClient.connect(process.env.DB_URL, { useUnifiedTopology: true }).then(clien
 async function createRoom(userNick, userID) {
     let count = await collection.find({}).count();
     let roomToCreate = count + 1;   //assign room number (after already running)
-    await collection.insertOne({ _id: roomToCreate, connected: 1, turn: 2, nicks: [userNick], uIDs: [userID], b: [] });
+    await collection.insertOne({ _id: roomToCreate, connected: 1, turn: 2, nicks: [userNick], uIDs: [userID], board: [] });
     return roomToCreate;
 }
 
@@ -28,14 +28,14 @@ function findRoomByUserID(uID) {
 
 async function updateRoom(roomID, playerNumber, position) {
     let room = await collection.findOne({_id: parseInt(roomID)});
-    room.b[position] = playerNumber;
+    room.board[position] = playerNumber;
     room.turn = playerNumber == 0 ? 1 : 0;
     if (checkWinner(room)) {
         room.winner = playerNumber;
-    } else if (room.b.length == 9) {
+    } else if (room.board.length == 9) {
         room.draw = true;
         for (let i = 0; i < 9; i++) {
-            if (room.b[i] == null) {
+            if (room.board[i] == null) {
                 room.draw = false;
                 break;
             }
