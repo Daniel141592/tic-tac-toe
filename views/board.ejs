@@ -19,22 +19,26 @@
     %>
     <h2 id="message">
         <% if (room.draw == true) { %>
-        <span class="active"><%= "Remis!" %></span>
+            <span class="active">Remis!</span>
         <% } else if (room.winner != null) { %>
-        <span <%= playerNumber == room.winner ? "class=active" : "" %>><%= "Wygrywa "+room.nicks[room.winner]; %></span>
+            <span <%= playerNumber == room.winner ? "class=active" : "" %>>Wygrywa <%= room.nicks[room.winner] %></span>
         <% } else { %>
-        <%= messages[room.turn]; %>
-        <% if (room.turn == 0 || room.turn == 1) { %>
-        <span <%= playerNumber == room.turn ? "class=active" : "" %>><%= "("+room.nicks[room.turn]+")"; %></span>
-        <% }} %>
+            <%= messages[room.turn]; %>
+            <% if (room.turn == 0 || room.turn == 1) { %>
+                <span <%= playerNumber == room.turn ? "class=active" : "" %>>(<%= room.nicks[room.turn] %>)</span>
+            <% } %>
+        <% } %>
     </h2>
     <form method="post">
         <div id="board">
-            <button name="position" value="0"><%= s[room.board[0]] %></button><button name="position" value="1"><%= s[room.board[1]] %></button><button name="position" value="2"><%= s[room.board[2]] %></button>
-            <button name="position" value="3"><%= s[room.board[3]] %></button><button name="position" value="4"><%= s[room.board[4]] %></button><button name="position" value="5"><%= s[room.board[5]] %></button>
-            <button name="position" value="6"><%= s[room.board[6]] %></button><button name="position" value="7"><%= s[room.board[7]] %></button><button name="position" value="8"><%= s[room.board[8]] %></button>
+            <% for (let i = 0; i < 9; i++) { %>
+                <button name="position" value=<%= i %>>
+                    <span <%= playerNumber == room.board[i] ? "class=active" : "" %>><%= s[room.board[i]] %></span>
+                </button>
+            <% } %>
         </div>   
     </form>
+    <a id="homepage" href="/">Strona główna</a>
 </body>
 
 </html>

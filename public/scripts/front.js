@@ -23,7 +23,10 @@ $(document).ready(() => {
                 let buttons = $("[name='position']");
 
                 for (let i = 0; i < 9; i++) {
-                    buttons.eq(i).html(s[result.board[i]]);
+                    if (result.playerNumber == result.board[i])
+                        buttons.eq(i).html("<span class=\"active\">"+s[result.board[i]]+"</span>");
+                    else 
+                        buttons.eq(i).html(s[result.board[i]]);
                 }
             },
             error: (xhr, status, err) => {

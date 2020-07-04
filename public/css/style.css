@@ -8,6 +8,9 @@ body {
 
 .active {
     color: red;
+}
+
+h2 .active {
     font-style: italic;
 }
 
@@ -18,6 +21,7 @@ body {
 #board {
     width: calc(3 * var(--x));
     margin: auto;
+    font-size: 0;
 }
 
 #board button {
@@ -25,4 +29,12 @@ body {
     height: var(--x);
     vertical-align: top;
     font-size: 30px;
+}
+
+#homepage {
+    position: fixed;
+    font-size: 18px;
+    color: green;
+    left: 5px;
+    top: 5px;
 }
