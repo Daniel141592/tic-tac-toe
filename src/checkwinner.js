@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = (room) => {
+export default (room) => {
     for (let i = 0; i <= 6; i = i + 3)
         if ((room.board[i] != null) && (room.board[i] == room.board[i + 1] && room.board[i] == room.board[i + 2]))
             return true;

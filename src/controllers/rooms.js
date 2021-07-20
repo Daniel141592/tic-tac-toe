@@ -1,8 +1,10 @@
 "use strict";
 
-const path = require('path');
-const dbManager = require('../dbmanager.js');
-const User = require("../user.js");
+import path from 'path';
+import * as dbManager from '../dbmanager.js';
+import User from '../user.js';
+
+const __dirname = path.resolve();
 
 async function check(req, res, next) {
     let room = await dbManager.findRoom(req.params.id);
@@ -27,7 +29,7 @@ async function check(req, res, next) {
 async function get(req, res) {
     //new player (link)
     if (res.locals.playerNumber == null) {
-        res.sendFile(path.join(__dirname, "../../views/initform.html"));
+        res.sendFile(path.join(__dirname, "views/initform.html"));
         return;
     }
 
@@ -62,7 +64,7 @@ async function post(req, res) {
     res.render("board");
 }
 
-module.exports = {
+export {
     check,
     get,
     post

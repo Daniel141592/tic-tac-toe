@@ -1,6 +1,6 @@
 "use strict";
 
-const dbManager = require('./dbmanager.js');
+import * as dbManager from './dbmanager.js';
 
 class User {
     constructor(nick) {
@@ -30,4 +30,4 @@ class User {
     }
 }
 
-module.exports = User;
+export default User;

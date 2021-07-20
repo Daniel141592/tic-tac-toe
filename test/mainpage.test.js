@@ -1,7 +1,7 @@
 "use strict";
 
-const mainpage = require('./../src/controllers/mainpage.js');
-const User = require('./../src/user.js');
+import * as mainpage from './../src/controllers/mainpage.js';
+//const User = require('./../src/user.js');
 
 const mockUserAssign = jest.fn();
 jest.mock('./../src/user.js', () => {

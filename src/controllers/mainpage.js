@@ -1,10 +1,11 @@
 "use strict";
 
-const User = require('../user.js');
-const path = require('path');
+import User from '../user.js';
+import path from 'path';
+const __dirname = path.resolve();
 
 function get(req, res) {
-    res.sendFile(path.join(__dirname, "../../views/initform.html"));
+    res.sendFile(path.join(__dirname, "views/initform.html"));
 }
 
 async function post(req, res) {
@@ -19,7 +20,7 @@ async function post(req, res) {
 	res.redirect('/'+roomID);
 }
 
-module.exports = {
+export {
     post,
     get
 };

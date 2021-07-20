@@ -1,7 +1,7 @@
 "use strict";
 
-const {MongoClient} = require('mongodb');
-const checkWinner = require('./checkwinner.js');
+import MongoClient from 'mongodb';
+import checkWinner from './checkwinner.js';
 
 let collection;
 MongoClient.connect(process.env.DB_URL, { useUnifiedTopology: true }).then(client => collection = client.db().collection('rooms'));
@@ -45,7 +45,7 @@ async function updateRoom(roomID, playerNumber, position) {
     return room;
 }
 
-module.exports = {
+export {
     createRoom,
     findRoom,
     findRoomByUserID,

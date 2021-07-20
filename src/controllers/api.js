@@ -1,7 +1,7 @@
 "use strict";
 
-const dbManager = require('../dbmanager.js');
-const User = require('../user.js');
+import * as dbManager from '../dbmanager.js';
+import User from '../user.js';
 
 async function get(req, res) {
     let userID = req.cookies.user;
@@ -94,7 +94,7 @@ async function updateRoom(req, res) {
     }
 }
 
-module.exports = {
+export {
     get,
     check,
     send,

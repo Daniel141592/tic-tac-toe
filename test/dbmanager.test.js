@@ -1,7 +1,7 @@
 "use strict";
 
-const dbManager = require('../src/dbmanager.js');
-const checkWinner = require('../src/checkwinner.js');
+import * as dbManager from '../src/dbmanager.js';
+import checkWinner from '../src/checkwinner.js';
 const COUNT = 1;
 
 let mockCollection = {
@@ -14,22 +14,19 @@ let mockCollection = {
 };
 
 jest.mock('../src/checkwinner.js');
-
 jest.mock('mongodb', () => {
     return {
-        MongoClient: {
-            connect: jest.fn(() => {
-                return Promise.resolve({
-                    db() {
-                        return {
-                            collection() {
-                                return mockCollection;
-                            }
+        connect: jest.fn(() => {
+            return Promise.resolve({
+                db() {
+                    return {
+                        collection() {
+                            return mockCollection;
                         }
                     }
-                });
-            })
-        }
+                }
+            });
+        })
     }
 });
 
