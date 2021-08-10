@@ -31,6 +31,10 @@ h2 .active {
     font-size: 30px;
 }
 
+#board button span {
+    pointer-events: none;
+}
+
 #homepage {
     position: fixed;
     font-size: 18px;

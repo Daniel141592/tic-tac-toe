@@ -1,7 +1,6 @@
 "use strict";
 
 import * as rooms from './../src/controllers/rooms.js';
-//const User = require('./../src/user.js');
 import * as dbManager from './../src/dbmanager.js';
 
 jest.mock('./../src/dbmanager.js');
