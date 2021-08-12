@@ -11,7 +11,7 @@ import cookieParser from 'cookie-parser';
 import * as mainpage from './src/controllers/mainpage.js';
 import * as rooms from './src/controllers/rooms.js';
 import api from './src/routes/api.js';
-import './src/serversocket';
+import * as serversocket from './src/serversocket';
 
 const app = express();
 const __dirname = path.resolve();
@@ -36,3 +36,5 @@ app.post('/:id', rooms.check, rooms.post);
 app.listen(PORT, () => {
 	console.log('listening on port ' + PORT);
 });
+
+serversocket.init();
