@@ -13,7 +13,6 @@ $(document).ready(() => {
             let messages = ["Teraz krzyżyk", "Teraz kółko", "Oczekiwanie na gracza..."];
             let s = ["×", "⃝"];
             let message = "";
-            console.log(event.data);
             let result = JSON.parse(event.data);
 
             if (result.draw == true) {
@@ -30,6 +29,8 @@ $(document).ready(() => {
             let buttons = $("[name='position']");
 
             for (let i = 0; i < 9; i++) {
+                if (result.board[i] == null)
+                    continue;
                 if (result.playerNumber == result.board[i])
                     buttons.eq(i).html("<span class=\"active\">" + s[result.board[i]] + "</span>");
                 else

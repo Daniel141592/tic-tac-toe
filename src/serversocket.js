@@ -12,8 +12,7 @@ wss.on('connection', async (ws, request) => {
     let room = await dbManager.findRoomByUserID(userID);
     if (sockets[room._id] == undefined)
         sockets[room._id] = [];
-    sockets[room._id].push(ws);
-    console.log("In room "+room._id+" there is "+(sockets[room._id].length)+" sockets");
+    sockets[room._id][userID] = ws;
 
 	ws.on('message', async message => {
         room = await dbManager.findRoomByUserID(userID);
@@ -33,13 +32,23 @@ wss.on('connection', async (ws, request) => {
         if (playerNumber == room.turn && room.board[position] == null && room.winner == null) {
             room = await dbManager.updateRoom(room._id, playerNumber, position);
         }
-        room.playerNumber = userID == room.uIDs[0] ? 0 : 1; 
-        delete room.uIDs;   //no need to send this
-        
-        //send board to all players
-        for (const i in sockets[room._id]) {
-            room.yourTurn = sockets[room._id][i] != ws;
-            sockets[room._id][i].send(JSON.stringify(room));
-        }
+        send(room);
 	});
 });
+
+function send(room) {
+    if (sockets[room._id] == undefined)
+        return;
+    
+    //send board to all players
+    for (const userID in sockets[room._id]) {
+        let response = JSON.parse(JSON.stringify(room));
+        response.playerNumber = userID == room.uIDs[0] ? 0 : 1;
+        delete response.uIDs;
+        sockets[room._id][userID].send(JSON.stringify(response));
+    }
+}
+
+export {
+    send
+};

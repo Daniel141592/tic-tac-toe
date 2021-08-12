@@ -3,6 +3,7 @@
 import path from 'path';
 import * as dbManager from '../dbmanager.js';
 import User from '../user.js';
+import * as serversocket from '../serversocket.js';
 
 const __dirname = path.resolve();
 
@@ -37,31 +38,20 @@ async function get(req, res) {
 }
 
 async function post(req, res) {
+    if (res.locals.playerNumber != null)
+        return;
     //new player sent his nick
-    if (res.locals.playerNumber == null) {
-        if (req.body == null || req.body.nick == null || req.body.nick.trim() == "") {
-            res.status(400).send('Nie wpisano nicku');
-            return;
-        }
-        res.locals.playerNumber = 1;
-        let user = new User(req.body.nick);
-        res.cookie('user', user.id);
-        user.join(req.params.id);
-        res.locals.room = await dbManager.findRoom(req.params.id);
-        res.render("board");
+    if (req.body == null || req.body.nick == null || req.body.nick.trim() == "") {
+        res.status(400).send('Nie wpisano nicku');
         return;
     }
-
-    if (req.body.position == null || isNaN(req.body.position) || req.body.position < 0 || req.body.position > 8) {
-        res.status(400).send("Invalid value");
-        return;
-    }
-    let position = parseInt(req.body.position);
-
-    if (res.locals.playerNumber == res.locals.room.turn && res.locals.room.board[position] == null && res.locals.room.winner == null) {
-        res.locals.room = await dbManager.updateRoom(req.params.id, res.locals.playerNumber, position);
-    }
+    res.locals.playerNumber = 1;
+    let user = new User(req.body.nick);
+    res.cookie('user', user.id);
+    user.join(req.params.id);
+    res.locals.room = await dbManager.findRoom(req.params.id);
     res.render("board");
+    serversocket.send(res.locals.room);     //send information to other players
 }
 
 export {
