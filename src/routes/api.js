@@ -10,6 +10,5 @@ router.get('/rooms/:id/check', apiController.check, apiController.send);
 
 router.post('/rooms/:id/join', apiController.check, apiController.joinRoom);
 router.post('/rooms/create', apiController.create);
-router.post('/rooms/update', apiController.updateRoom);
 
 export default router;

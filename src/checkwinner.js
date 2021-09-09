@@ -1,6 +1,12 @@
 "use strict";
 
-export default (room) => {
+export default 
+/**
+ * Check if there is a winner of game
+ * @param {*} room - object from database, containing data about particular room
+ * @returns true if someone won the game, false otherwise
+ */
+(room) => {
     for (let i = 0; i <= 6; i = i + 3)
         if ((room.board[i] != null) && (room.board[i] == room.board[i + 1] && room.board[i] == room.board[i + 2]))
             return true;

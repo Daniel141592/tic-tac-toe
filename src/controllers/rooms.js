@@ -7,6 +7,9 @@ import * as serversocket from '../serversocket.js';
 
 const __dirname = path.resolve();
 
+/**
+ * check if user can join the room
+ */
 async function check(req, res, next) {
     let room = await dbManager.findRoom(req.params.id);
     let userID = req.cookies.user;
@@ -27,6 +30,9 @@ async function check(req, res, next) {
     next();
 }
 
+/**
+ * GET request to particular room.
+ */
 async function get(req, res) {
     //new player (link)
     if (res.locals.playerNumber == null) {
@@ -37,6 +43,9 @@ async function get(req, res) {
     res.render("board");
 }
 
+/**
+ * POST request to particular room. Happens when new user sends his nick.
+ */
 async function post(req, res) {
     if (res.locals.playerNumber != null)
         return;

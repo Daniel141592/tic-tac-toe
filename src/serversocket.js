@@ -6,6 +6,9 @@ import * as dbManager from './dbmanager.js';
 
 let sockets = [];
 
+/**
+ * Start listening on server socket and handle moves in game.
+ */
 function init() {
     const PORT = process.env.WEBSOCKET_PORT || 3300;
     const wss = new WebSocket.Server({ port: PORT });
@@ -40,13 +43,17 @@ function init() {
     });
 }
 
+/**
+ * Send data about specified room to all players in that room.
+ * @param {*} room - object describing room to work with
+ */
 function send(room) {
     if (sockets[room._id] == undefined)
         return;
     
     //send board to all players
     for (const userID in sockets[room._id]) {
-        let response = JSON.parse(JSON.stringify(room));
+        let response = JSON.parse(JSON.stringify(room));    //copy object
         response.playerNumber = userID == room.uIDs[0] ? 0 : 1;
         delete response.uIDs;
         sockets[room._id][userID].send(JSON.stringify(response));

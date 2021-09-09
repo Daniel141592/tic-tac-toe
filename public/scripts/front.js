@@ -15,7 +15,7 @@ $(document).ready(() => {
             let message = "";
             let result = JSON.parse(event.data);
 
-            if (result.draw == true) {
+            if (result.draw) {
                 message += "<span class=\"active\">Remis!</span>"
             } else if (result.winner != null) {
                 message += "<span " + (result.playerNumber == result.winner ? "class=active>" : ">") + " Wygrywa " + result.nicks[result.winner] + "</span>";
