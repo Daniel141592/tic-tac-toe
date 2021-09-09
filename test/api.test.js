@@ -101,21 +101,4 @@ describe("api", () => {
         await api.joinRoom(req, res);
         expect(mockUserJoin).toHaveBeenCalled();
     });
-
-    test('POST request on /api/rooms/update with no params should call res.status(400)', async () => {
-        await api.updateRoom(req, res);
-        expect(res.status).toHaveBeenLastCalledWith(400);
-    });
-
-    test('POST request on /api/rooms/update with incorrect param should call res.status(400)', async () => {
-        req.body.position = "12";
-        await api.updateRoom(req, res);
-        expect(res.status).toHaveBeenLastCalledWith(400);
-    });
-
-    test('correct POST request on /api/rooms/update should call dbManager.updateRoom()', async () => {
-        req.body.position = 3;
-        await api.updateRoom(req, res);
-        expect(dbManager.updateRoom).toHaveBeenLastCalledWith(res.locals.room._id, res.locals.playerNumber, req.body.position);
-    });
 });
