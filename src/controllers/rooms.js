@@ -1,9 +1,15 @@
 "use strict";
 
-const path = require('path');
-const dbManager = require('../dbmanager.js');
-const User = require("../user.js");
+import path from 'path';
+import * as dbManager from '../dbmanager.js';
+import User from '../user.js';
+import * as serversocket from '../serversocket.js';
 
+const __dirname = path.resolve();
+
+/**
+ * check if user can join the room
+ */
 async function check(req, res, next) {
     let room = await dbManager.findRoom(req.params.id);
     let userID = req.cookies.user;
@@ -24,45 +30,40 @@ async function check(req, res, next) {
     next();
 }
 
+/**
+ * GET request to particular room.
+ */
 async function get(req, res) {
     //new player (link)
     if (res.locals.playerNumber == null) {
-        res.sendFile(path.join(__dirname, "../../views/initform.html"));
+        res.sendFile(path.join(__dirname, "views/initform.html"));
         return;
     }
 
     res.render("board");
 }
 
+/**
+ * POST request to particular room. Happens when new user sends his nick.
+ */
 async function post(req, res) {
+    if (res.locals.playerNumber != null)
+        return;
     //new player sent his nick
-    if (res.locals.playerNumber == null) {
-        if (req.body == null || req.body.nick == null || req.body.nick.trim() == "") {
-            res.status(400).send('Nie wpisano nicku');
-            return;
-        }
-        res.locals.playerNumber = 1;
-        let user = new User(req.body.nick);
-        res.cookie('user', user.id);
-        user.join(req.params.id);
-        res.locals.room = await dbManager.findRoom(req.params.id);
-        res.render("board");
+    if (req.body == null || req.body.nick == null || req.body.nick.trim() == "") {
+        res.status(400).send('Nie wpisano nicku');
         return;
     }
-
-    if (req.body.position == null || isNaN(req.body.position) || req.body.position < 0 || req.body.position > 8) {
-        res.status(400).send("Invalid value");
-        return;
-    }
-    let position = parseInt(req.body.position);
-
-    if (res.locals.playerNumber == res.locals.room.turn && res.locals.room.board[position] == null && res.locals.room.winner == null) {
-        res.locals.room = await dbManager.updateRoom(req.params.id, res.locals.playerNumber, position);
-    }
+    res.locals.playerNumber = 1;
+    let user = new User(req.body.nick);
+    res.cookie('user', user.id);
+    user.join(req.params.id);
+    res.locals.room = await dbManager.findRoom(req.params.id);
     res.render("board");
+    serversocket.send(res.locals.room);     //send information to other players
 }
 
-module.exports = {
+export {
     check,
     get,
     post

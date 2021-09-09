@@ -1,14 +1,20 @@
 "use strict";
 
-require('dotenv').config();
-const express = require('express');
-const app = express();
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const mainpage = require('./src/controllers/mainpage.js');
-const rooms = require('./src/controllers/rooms.js');
-const api = require('./src/routes/api.js');
+require("@babel/core").transform("code", {
+	presets: ["@babel/preset-env"],
+});
 
+import './env.js';
+import express from 'express'
+import path from 'path'
+import cookieParser from 'cookie-parser';
+import * as mainpage from './src/controllers/mainpage.js';
+import * as rooms from './src/controllers/rooms.js';
+import api from './src/routes/api.js';
+import * as serversocket from './src/serversocket';
+
+const app = express();
+const __dirname = path.resolve();
 const PORT = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
@@ -30,3 +36,5 @@ app.post('/:id', rooms.check, rooms.post);
 app.listen(PORT, () => {
 	console.log('listening on port ' + PORT);
 });
+
+serversocket.init();

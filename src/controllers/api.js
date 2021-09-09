@@ -1,8 +1,11 @@
 "use strict";
 
-const dbManager = require('../dbmanager.js');
-const User = require('../user.js');
+import * as dbManager from '../dbmanager.js';
+import User from '../user.js';
 
+/**
+ * GET request to /api
+ */
 async function get(req, res) {
     let userID = req.cookies.user;
     try {
@@ -15,6 +18,9 @@ async function get(req, res) {
     }   
 }
 
+/**
+ * User check if he can join room
+ */
 async function check(req, res, next) {
     let room = await dbManager.findRoom(req.params.id);
     let userID = req.cookies.user;
@@ -33,6 +39,9 @@ async function check(req, res, next) {
     next();
 }
 
+/**
+ * Send response to client. Used combined with check() which works as middleware
+ */
 async function send(req, res) {
     res.json(res.locals.response);
 }
@@ -48,6 +57,9 @@ async function create(req, res) {
     res.json({ canPlay: true, roomID: roomID });
 }
 
+/**
+ * Function called when client send POST request
+ */
 async function joinRoom(req, res) {
     if (!res.locals.response.canJoin) {
         res.locals.response.canPlay = false;
@@ -71,34 +83,10 @@ async function joinRoom(req, res) {
     res.json(res.locals.response);
 }
 
-async function updateRoom(req, res) {
-    if (req.body.position == null || isNaN(req.body.position) || req.body.position < 0 || req.body.position > 8) {
-        res.status(400).send("Invalid value");
-        return;
-    }
-    let position = parseInt(req.body.position);
-    let userID = req.cookies.user;
-
-    try {
-        let room = await dbManager.findRoomByUserID(userID);
-        let playerNumber = userID == room.uIDs[0] ? 0 : 1;    
-        
-        if (playerNumber == room.turn && room.board[position] == null && room.winner == null) {
-            room = await dbManager.updateRoom(room._id, playerNumber, position);
-        }
-        room.playerNumber = playerNumber;
-        delete room.uIDs;
-        res.json(room);
-    } catch (e) {
-        res.status(404).send("Game not found");
-    }
-}
-
-module.exports = {
+export {
     get,
     check,
     send,
     create,
-    joinRoom,
-    updateRoom
+    joinRoom
 }

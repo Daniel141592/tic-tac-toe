@@ -1,8 +1,7 @@
 "use strict";
 
-const rooms = require('./../src/controllers/rooms.js');
-const User = require('./../src/user.js');
-const dbManager = require('./../src/dbmanager.js');
+import * as rooms from './../src/controllers/rooms.js';
+import * as dbManager from './../src/dbmanager.js';
 
 jest.mock('./../src/dbmanager.js');
 const mockUserJoin = jest.fn();
@@ -74,7 +73,7 @@ describe("rooms", () => {
     test('new player GET request should call res.sendFile(.../views/initform.html)', async () => {
         res.locals.playerNumber = null;
         await rooms.get(req, res);
-        expect(res.sendFile).toHaveBeenLastCalledWith(expect.stringMatching(/\\views\\initform.html$/));
+        expect(res.sendFile).toHaveBeenLastCalledWith(expect.stringMatching(/\/views\/initform.html$/));
     });
 
     test('known player GET request should call res.render("board")', async () => {

@@ -1,8 +1,7 @@
 "use strict";
 
-const api = require('../src/controllers/api.js');
-const dbManager = require('../src/dbmanager.js');
-const User = require('../src/user.js');
+import * as api from '../src/controllers/api.js';
+import * as dbManager from '../src/dbmanager.js';
 
 jest.mock('../src/dbmanager.js');
 const mockUserAssign = jest.fn();
@@ -117,6 +116,6 @@ describe("api", () => {
     test('correct POST request on /api/rooms/update should call dbManager.updateRoom()', async () => {
         req.body.position = 3;
         await api.updateRoom(req, res);
-        expect(dbManager.updateRoom).toHaveBeenLastCalledWith(res.locals.room._id, res.locals.room.playerNumber, req.body.position);
+        expect(dbManager.updateRoom).toHaveBeenLastCalledWith(res.locals.room._id, res.locals.playerNumber, req.body.position);
     });
 });

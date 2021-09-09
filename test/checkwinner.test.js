@@ -1,6 +1,6 @@
 "use strict";
 
-const checkWinner = require('../src/checkwinner.js');
+import checkWinner from '../src/checkwinner.js';
 
 describe('checkwinner', () => {
     let room = {};
