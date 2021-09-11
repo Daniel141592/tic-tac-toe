@@ -2,6 +2,7 @@
 
 import * as dbManager from '../dbmanager.js';
 import User from '../user.js';
+import * as serversocket from '../serversocket.js';
 
 /**
  * GET request to /api
@@ -81,6 +82,8 @@ async function joinRoom(req, res) {
         user.join(req.params.id);
     }
     res.json(res.locals.response);
+    res.locals.room = await dbManager.findRoom(req.params.id);
+    serversocket.send(res.locals.room);     //send information to other players
 }
 
 export {
