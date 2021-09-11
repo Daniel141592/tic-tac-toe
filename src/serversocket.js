@@ -19,6 +19,7 @@ function init() {
         if (sockets[room._id] == undefined)
             sockets[room._id] = [];
         sockets[room._id][userID] = ws;
+        send(room); //send info to everyone else
     
         ws.on('message', async message => {
             room = await dbManager.findRoomByUserID(userID);
@@ -55,11 +56,11 @@ function send(room) {
     for (const userID in sockets[room._id]) {
         let response = JSON.parse(JSON.stringify(room));    //copy object
         response.playerNumber = userID == room.uIDs[0] ? 0 : 1;
-        delete response.uIDs;
+        delete response.uIDs;   //no need to send this
         sockets[room._id][userID].send(JSON.stringify(response));
     }
 }
 
 export {
-    send, init
+    init
 };

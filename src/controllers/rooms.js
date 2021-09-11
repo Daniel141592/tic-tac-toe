@@ -3,7 +3,6 @@
 import path from 'path';
 import * as dbManager from '../dbmanager.js';
 import User from '../user.js';
-import * as serversocket from '../serversocket.js';
 
 const __dirname = path.resolve();
 
@@ -60,7 +59,6 @@ async function post(req, res) {
     user.join(req.params.id);
     res.locals.room = await dbManager.findRoom(req.params.id);
     res.render("board");
-    serversocket.send(res.locals.room);     //send information to other players
 }
 
 export {
